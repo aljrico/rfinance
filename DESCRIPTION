@@ -1,0 +1,23 @@
+Package: rfinance
+Title: Set of tools for financial analysis. 
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Alejandro",
+           family = "J Rico",
+           role = c("aut", "cre"),
+           email = "aljrico@gmail.com")
+Description: From downloading financial data to perform industry-standard analysis, this package includes a suit of tools to perform financial analysis following best practices of the industry.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    glue,
+    httr,
+    stringr,
+    lubridate,
+    magrittr,
+    readr,
+    tibble,
+    pbapply
+RoxygenNote: 7.0.2
