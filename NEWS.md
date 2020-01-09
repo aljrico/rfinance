@@ -2,7 +2,9 @@
 
 * Better documentation
 * Readme available
-* New functionality: `get_company_profile()`
+* New functions: `get_company_profile()`, `get_dividends()`
+* Improved `get_prices()`
+* Added adjustment to splits
 
 # rfinance 0.0.0.9000
 

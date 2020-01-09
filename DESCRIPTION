@@ -1,5 +1,5 @@
 Package: rfinance
-Title: Set of tools for financial analysis. 
+Title: Set of tools for financial analysis
 Version: 0.1.0
 Authors@R: 
     person(given = "Alejandro",
@@ -19,5 +19,9 @@ Imports:
     magrittr,
     readr,
     tibble,
+    curl,
+    xts,
+    zoo,
+    TTR,
     pbapply
 RoxygenNote: 7.0.2

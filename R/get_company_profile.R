@@ -28,8 +28,6 @@ fetch_company_profile <- function(symbol) {
 #' @rdname get_company_profile
 #' @export
 #'
-#'
-#'
 get_company_profile <- function(symbol) {
   suppressWarnings(dplyr::bind_rows(pbapply::pblapply(symbol, FUN = fetch_company_profile)))
 }
