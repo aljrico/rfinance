@@ -4,7 +4,7 @@ get_handle <- function(){
   
   # establish session
   new_session <- function() {
-    for (i in 1:5) {
+    for (i in 1:3) {
       h <- curl::new_handle()
       curl::handle_setopt(h)
       
@@ -20,7 +20,7 @@ get_handle <- function(){
     }
     
     if (NROW(curl::handle_cookies(h)) == 0)
-      stop("Could not establish session after 5 attempts.")
+      stop("Could not establish session after 3 attempts.")
     closeAllConnections()
     return(h)
   }
