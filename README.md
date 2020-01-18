@@ -32,7 +32,7 @@ microbenchmark(
   tidyquant = tidyquant::tq_get(symbols, get = "stock.prices")
 )
 ```
-<img src="man/figures/packages_microbenchmark.png" align="center" width="240" />
+<img src="man/figures/packages_microbenchmark.png" align="center" width="1200" />
 
 
 
