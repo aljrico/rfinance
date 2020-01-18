@@ -23,7 +23,7 @@ install.packages("rfinance")
 
 If we want to download data of many different companies, computation times can very easily sky-rocket and get impractiable. One of the main reasons for this is packages making several calls to the API they are getting the data from for _every_ company you are asking. `rfinance` 
 
-```
+```r
 library(microbenchmark)
 symbols <- sample(get_symbols_list(index = "sp500"), 10)
 microbenchmark(
