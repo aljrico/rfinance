@@ -14,6 +14,28 @@ You can install the released version of rfinance from [CRAN](https://CRAN.R-proj
 install.packages("rfinance")
 ```
 
+
+## Why you should use `rfinance`
+
+`rfinance` aims to provide with a user-friendly API that is robust, fast, efficient and more consistent with common `tidy` R usage.
+
+### Speed
+
+If we want to download data of many different companies, computation times can very easily sky-rocket and get impractiable. One of the main reasons for this is packages making several calls to the API they are getting the data from for _every_ company you are asking. `rfinance` 
+
+```
+library(microbenchmark)
+symbols <- sample(get_symbols_list(index = "sp500"), 10)
+microbenchmark(
+  rfinance = rfinance::get_historic_prices(symbols),
+  quantmod = quantmod::getSymbols(symbols),
+  tidyquant = tidyquant::tq_get(symbols, get = "stock.prices")
+)
+```
+<img src="man/figures/packages_microbenchmark.png" align="center" width="240" />
+
+
+
 ## Examples
 
 ### Historic Prices
@@ -22,7 +44,6 @@ Let's say that you want to download all historic prices from a given company. `g
 
 ``` r
 library(rfinance)
-
 df <- get_historic_prices(symbol = 'MSFT')
 ```
 

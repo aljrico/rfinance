@@ -1,3 +1,6 @@
+#'
+#' @description This function defines the standard Yahoo URL for the API call
+#' @internal
 build_yahoo_url <- function(symbol, from, to, period, type, handle){
   interval <- match.arg(period, c("1d", "1wk", "1mo"))
   event <- match.arg(type, c("history", "div", "split"))

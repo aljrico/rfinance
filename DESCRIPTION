@@ -23,5 +23,12 @@ Imports:
     xts,
     zoo,
     TTR,
-    pbapply
+    pbapply,
+    progress,
+    xml2,
+    rvest
 RoxygenNote: 7.0.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

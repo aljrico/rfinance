@@ -2,13 +2,13 @@
 % Please edit documentation in R/get_dividends.R
 \name{get_dividends}
 \alias{get_dividends}
-\title{Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.}
+\title{Dividend payments history}
 \usage{
 get_dividends(
   symbol,
-  from = "1970-01-01",
+  from = "1950-01-01",
   to = Sys.Date(),
-  split_adjust = TRUE
+  split_adjust = FALSE
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ get_dividends(
 Returns a tibble
 }
 \description{
-Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.
+This function downloads all available dividend payments history of a given company.
 }
 \examples{
 

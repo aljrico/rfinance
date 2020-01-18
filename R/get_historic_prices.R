@@ -3,14 +3,23 @@ fetch_historic_prices <- function(symbol) {
   content <- url %>%
     httr::GET() %>%
     httr::content()
+  
+  if(length(content) == 0){
+    message(glue::glue('Historic Prices for {symbol} is empty. Skipping'))
+    dates_array  = NA
+    prices_array = NA
+  }else{
+    content <- content$historical
+    
+    dates_array <- sapply(content, function(x) x$date)
+    prices_array <- sapply(content, function(x) x$close)
+    
+    dates_array <- as.Date(dates_array)
+    prices_array <- as.numeric(prices_array)
+    
+  }
 
-  content <- content$historical
-
-  dates_array <- sapply(content, function(x) x$date)
-  prices_array <- sapply(content, function(x) x$close)
-
-
-  tibble::tibble(date = as.Date(dates_array), price = as.numeric(prices_array), name = as.character(symbol))
+  tibble::tibble(date = dates_array, price = prices_array, name = as.character(symbol))
 }
 
 

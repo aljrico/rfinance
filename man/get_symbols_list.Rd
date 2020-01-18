@@ -2,15 +2,18 @@
 % Please edit documentation in R/get_symbols_list.R
 \name{get_symbols_list}
 \alias{get_symbols_list}
-\title{Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.}
+\title{Get all available symbols}
 \usage{
-get_symbols_list()
+get_symbols_list(index = "any")
+}
+\arguments{
+\item{index}{Includes only symbols that appear in determined indexes ('sp500'). Deafults to 'any'.}
 }
 \value{
-Returns an array.
+Returns an array with all symbols available in the API.
 }
 \description{
-Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.
+Get all available symbols
 }
 \examples{
 

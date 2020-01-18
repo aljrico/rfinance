@@ -2,26 +2,26 @@
 % Please edit documentation in R/get_prices.R
 \name{get_prices}
 \alias{get_prices}
-\title{Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.}
+\title{Download historic prices of a given company}
 \usage{
-get_prices(symbol, from = "1970-01-01", to = "2030-01-01")
+get_prices(symbol, from = "1970-01-01", to = Sys.Date())
 }
 \arguments{
-\item{symbol}{Specifies the ticker or symbol the user wants to download the data of, in the form of a string. Example: 'MSFT'}
+\item{symbol}{String that specifies the ticker/symbol of the company we want to download its prices.}
 
-\item{from}{Minimum date to get data from}
+\item{from}{Minimum date to get data from.}
 
-\item{to}{Maximum date to get data of}
+\item{to}{Maximum date to get data of.}
 }
 \value{
-Returns a tibble
+Returns a tibble.
 }
 \description{
-Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.
+This function retrieves all available historic prices of a given company. This company is specified using the `symbol` argument. All available symbols can be found using `get_symbols_list()`
 }
 \examples{
 
-prices <- get_prices('MSFT')
+prices <- get_prices('MSFT', from = '2010-04-05', to = '2011-03-02')
 }
 \author{
 Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.github.io}{Personal Website}

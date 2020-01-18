@@ -2,18 +2,18 @@
 % Please edit documentation in R/get_company_profile.R
 \name{get_company_profile}
 \alias{get_company_profile}
-\title{Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.}
+\title{Basic Company Profile}
 \usage{
 get_company_profile(symbol)
 }
 \arguments{
-\item{symbol}{Specifies the ticker or symbol the user wants to download the data of, in the form of a string. Example: 'MSFT'}
+\item{symbol}{Specifies the ticker or symbol the user wants to download the data of, in the form of a string.}
 }
 \value{
 Returns a tibble
 }
 \description{
-Functions to call and retrieve financial data from remote databases, by using company tickers (symbols). It uses publicly available API to download all data.
+This function downloads the latest basic information of a given company. Full name, sector, last dividend, etc.
 }
 \examples{
 
