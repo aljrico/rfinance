@@ -30,7 +30,7 @@ get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
   })
   
   names(output) <- symbol
-  output <- data.table::rbindlist(output)
+  output <- data.table::rbindlist(output) %>% tibble::as_tibble()
   return(output) 
 }
 
