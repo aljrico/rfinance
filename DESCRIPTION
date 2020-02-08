@@ -26,7 +26,8 @@ Imports:
     pbapply,
     progress,
     xml2,
-    rvest
+    rvest,
+    data.table
 RoxygenNote: 7.0.2
 Suggests: 
     knitr,
