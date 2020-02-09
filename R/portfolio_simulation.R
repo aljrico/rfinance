@@ -2,9 +2,10 @@
 #' @title portfolio class
 #' @docType class
 #' @description portfolio class description
+#' @export
 #'
 portfolio <-
-  R6::R6Class(
+  R6::R6Class("portfolio",
     public = list(
       cash = 0,
       orders = data.frame(asset = character(0), date = character(0), type = character(0)),
@@ -16,7 +17,9 @@ portfolio <-
       #' @param money How much money 
       #' 
       buy = function(asset, date, number_assets = NULL, money = NULL) {
-        if (!(asset %in% self$assets_info)) self$download_data(asset)
+        if (!(asset %in% names(private$assets_info))) self$download_data(asset)
+
+        date <- lubridate::ymd(date)
 
         # Get asset price history
         price <- private$check_price(asset = asset, operation_date = date)
@@ -56,6 +59,10 @@ portfolio <-
         # Register Action
         private$register_order(asset, date, type = "sell", amount = number_assets, price = cash_received)
       },
+      
+      sell_everything = function(date){
+        
+      },
       cash_in = function(amount, date, report = TRUE) {
         if (amount >= 0) self$cash <- self$cash + amount
         if (amount < 0) stop("You can't put negative cash.")
@@ -74,17 +81,17 @@ portfolio <-
       download_data = function(asset) {
         clean_prices <- function(prices) {
           prices %>%
-            rename(date = Date, price = `Adj Close`) %>%
-            select(date, price, name) %>%
-            mutate(date = as.Date(date)) %>%
-            mutate(price = as.numeric(price)) %>%
-            arrange(date)
+            dplyr::rename(date = Date, price = `Adj Close`) %>%
+            dplyr::select(date, price, name) %>%
+            dplyr::mutate(date = as.Date(date)) %>%
+            dplyr::mutate(price = as.numeric(price)) %>%
+            dplyr::arrange(date)
         }
         
         fill_all_days <- function(df) {
           df %>%
             tidyr::complete(date = seq.Date(min(date), max(date), by = "day")) %>%
-            arrange(date) %>%
+            dplyr::arrange(date) %>%
             zoo::na.locf()
         }
         
@@ -93,38 +100,47 @@ portfolio <-
           clean_prices() %>%
           fill_all_days()
       },
-      portfolio_evolution = function(d_max) {
-        orders <- self$orders
-        
-        d_max <- lubridate::ymd(as.Date(d_max))
+      
+      current_ownership = function(date, orders = self$orders){
+        d_max <- lubridate::ymd(as.Date(date))
         d_min <- lubridate::ymd(as.Date(min(orders$date)))
         all_dates <- seq.Date(d_min, d_max, by = "day")
+        
+        orders_list <- list()
+        
+        for (i in seq_along(all_dates)) {
+          this_date <- all_dates[[i]]
+          this_orders <- orders %>%
+            dplyr::filter(date <= this_date) %>%
+            dplyr::filter(asset != "cash")
+          
+          if (nrow(this_orders) < 1) next
+          
+          orders_list[[i]] <-
+            this_orders %>%
+            dplyr::mutate(amount = ifelse(type == "sell", -amount, amount)) %>%
+            dplyr::group_by(asset) %>%
+            dplyr::summarise(amount = sum(amount, na.rm = TRUE)) %>%
+            dplyr::mutate(date = this_date)
+        }
+        
+        orders_list %>% 
+          data.table::rbindlist() %>% 
+          tibble::as_tibble()
+        
+      },
+      
+      portfolio_evolution = function(d_max) {
 
         extract_prices <- function(x) {
           x[["historic_prices"]]
         }
-
-
-        orders_list <- list()
-
-        for (i in seq_along(all_dates)) {
-          this_date <- all_dates[[i]]
-          this_orders <- orders %>%
-            filter(date <= this_date) %>%
-            filter(asset != "cash")
-
-          if (nrow(this_orders) < 1) next
-
-          orders_list[[i]] <-
-            this_orders %>%
-            mutate(amount = ifelse(type == "sell", -amount, amount)) %>%
-            group_by(asset) %>%
-            summarise(amount = sum(amount, na.rm = TRUE)) %>%
-            mutate(date = this_date)
-        }
-
-        orders_compact <- orders_list %>% bind_rows()
-        existing_assets <- orders_compact$asset %>%
+        
+        orders <- self$orders
+        ownership <- self$current_ownership(date = d_max, orders = orders)
+        
+        
+        existing_assets <- ownership$asset %>%
           unique() %>%
           as.character()
 
@@ -134,14 +150,14 @@ portfolio <-
           data.table::rbindlist() %>%
           tibble::as_tibble()
 
-        orders_compact %>%
-          arrange(date) %>%
-          rename(name = asset) %>%
-          mutate(name = as.character(name)) %>%
-          left_join(prices) %>%
+        ownership %>%
+          dplyr::arrange(date) %>%
+          dplyr::rename(name = asset) %>%
+          dplyr::mutate(name = as.character(name)) %>%
+          dplyr::left_join(prices) %>%
           zoo::na.locf() %>%
-          mutate(asset_value = amount * price) %>%
-          select(date, name, asset_value) %>%
+          dplyr::mutate(asset_value = amount * price) %>%
+          dplyr::select(date, name, asset_value) %>%
           tidyr::pivot_wider(names_from = name, values_from = asset_value) %>%
           replace(., is.na(.), 0)
       }
@@ -158,7 +174,7 @@ portfolio <-
           .$assets_info %>%
           .[[asset]] %>%
           .[["historic_prices"]] %>%
-          filter(date == operation_date) %>%
+          dplyr::filter(date == operation_date) %>%
           .$price
       }
     )
