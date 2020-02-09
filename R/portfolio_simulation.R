@@ -60,24 +60,62 @@ portfolio <-
         private$register_order(asset, date, type = "sell", amount = number_assets, price = cash_received)
       },
       
+      #' @description Sells all owned assets.
+      #' @param date Date or date-like string that tells when should this asset be sold.
+      #' 
       sell_everything = function(date){
+        this_date <- lubridate::ymd(as.Date(date))
         
+        today_ownership <- 
+          self$current_ownership(date) %>% 
+          dplyr::filter(amount > 0) %>% 
+          dplyr::filter(date == this_date)
+        
+        assets_owned <- today_ownership$asset %>% as.character()
+        amount_owned <- today_ownership$amount %>% as.numeric()
+        
+        for(i in seq_along(assets_owned)) self$sell(assets_owned[[i]], this_date, amount_owned[[i]])
       },
-      cash_in = function(amount, date, report = TRUE) {
+      
+      #' @description Add cash into the user portfolio.
+      #' @param amount How much cash should be moved.
+      #' @param date Date or date-like string.
+      #' @example 
+      #' my_portfolio <- portfolio$new()
+      #' my_portfolio$cash_in(100, '2020-01-01')
+      #' 
+      cash_in = function(amount, date) {
         if (amount >= 0) self$cash <- self$cash + amount
         if (amount < 0) stop("You can't put negative cash.")
 
         # Register Operation
-        if (report) private$register_order(asset = "cash", date = date, type = "cash_in", amount = amount, price = 1)
+        private$register_order(asset = "cash", date = date, type = "cash_in", amount = amount, price = 1)
       },
-      cash_out = function(amount, date, report = TRUE) {
+      
+      #' @description Withdraw cash from the user portfolio.
+      #' @param amount How much cash should be moved.
+      #' @param date Date or date-like string.
+      #' @example 
+      #' my_portfolio <- portfolio$new()
+      #' my_portfolio$cash_in(100, '2020-01-01')
+      #' my_portfolio$cash_out(50, '2020-01-01')
+      #' 
+      cash_out = function(amount, date) {
         remaining_cash <- self$cash - amount
         if (remaining_cash < 0) stop("You don't have enough cash to do that.")
         if (amount >= 0) self$cash <- remaining_cash
 
         # Register Operation
-        if (report) private$register_order(asset = "cash", date = date, type = "cash_out", amount = amount, price = 1)
+        private$register_order(asset = "cash", date = date, type = "cash_out", amount = amount, price = 1)
       },
+      
+      #' @description Downloads and stores all avilable historic prices of a given asset.
+      #' @param asset  Symbol specifying the asset.
+      #' @example 
+      #' 
+      #' my_portfolio <- portfolio$new()
+      #' portfolio$download_data('MSFT')
+      #' 
       download_data = function(asset) {
         clean_prices <- function(prices) {
           prices %>%
