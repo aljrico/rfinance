@@ -84,12 +84,12 @@ portfolio <-
       #' my_portfolio <- portfolio$new()
       #' my_portfolio$cash_in(100, '2020-01-01')
       #' 
-      cash_in = function(amount, date) {
+      cash_in = function(amount, date, report = TRUE) {
         if (amount >= 0) self$cash <- self$cash + amount
         if (amount < 0) stop("You can't put negative cash.")
 
         # Register Operation
-        private$register_order(asset = "cash", date = date, type = "cash_in", amount = amount, price = 1)
+        if(report) private$register_order(asset = "cash", date = date, type = "cash_in", amount = amount, price = 1)
       },
       
       #' @description Withdraw cash from the user portfolio.
@@ -100,13 +100,13 @@ portfolio <-
       #' my_portfolio$cash_in(100, '2020-01-01')
       #' my_portfolio$cash_out(50, '2020-01-01')
       #' 
-      cash_out = function(amount, date) {
+      cash_out = function(amount, date, report = TRUE) {
         remaining_cash <- self$cash - amount
         if (remaining_cash < 0) stop("You don't have enough cash to do that.")
         if (amount >= 0) self$cash <- remaining_cash
 
         # Register Operation
-        private$register_order(asset = "cash", date = date, type = "cash_out", amount = amount, price = 1)
+        if(report) private$register_order(asset = "cash", date = date, type = "cash_out", amount = amount, price = 1)
       },
       
       #' @description Downloads and stores all avilable historic prices of a given asset.
@@ -168,7 +168,7 @@ portfolio <-
         
       },
       
-      portfolio_evolution = function(d_max) {
+      simulate = function(d_max) {
 
         extract_prices <- function(x) {
           x[["historic_prices"]]
@@ -176,6 +176,7 @@ portfolio <-
         
         orders <- self$orders
         ownership <- self$current_ownership(date = d_max, orders = orders)
+        cash_history <- ps_cash_evolution(orders = self$orders, until = d_max)
         
         
         existing_assets <- ownership$asset %>%
@@ -197,7 +198,8 @@ portfolio <-
           dplyr::mutate(asset_value = amount * price) %>%
           dplyr::select(date, name, asset_value) %>%
           tidyr::pivot_wider(names_from = name, values_from = asset_value) %>%
-          replace(., is.na(.), 0)
+          replace(., is.na(.), 0) %>% 
+          dplyr::inner_join(cash_history)
       }
     ),
     private = list(
@@ -217,3 +219,40 @@ portfolio <-
       }
     )
   )
+
+
+ps_cash_evolution <- function(until = '2020-01-01', orders){
+  
+  until <- lubridate::ymd(as.Date(until))
+  
+  movements <- orders$type
+  money <- orders$price
+  amounts <- orders$amount
+  dates <- orders$date
+  starting_date <- min(dates)
+  
+  all_dates <- seq.Date(starting_date, until, 'day')
+  
+  cash_history <- c()
+  
+  for(i in seq_along(dates)){
+    
+    if(movements[[i]] == 'cash_in')   cash_movement <- + amounts[[i]]
+    if(movements[[i]] == 'cash_out')  cash_movement <- - amounts[[i]]
+    if(movements[[i]] == 'purchase')  cash_movement <- - money[[i]]
+    if(movements[[i]] == 'sell')      cash_movement <- + money[[i]]
+    
+    cash_history[[i]] <- cash_movement
+  }
+  
+  data.frame(
+    date = dates,
+    cash = cash_history
+  ) %>% 
+    dplyr::group_by(date) %>% 
+    dplyr::summarise(cash = sum(cash)) %>% 
+    dplyr::mutate(cash = cumsum(cash)) %>% 
+    dplyr::right_join(data.frame(date = all_dates)) %>% 
+    zoo::na.locf()
+  
+}
