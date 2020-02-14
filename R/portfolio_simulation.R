@@ -101,7 +101,7 @@ portfolio <-
       #' my_portfolio$cash_out(50, '2020-01-01')
       #' 
       cash_out = function(amount, date, report = TRUE) {
-        remaining_cash <- self$cash - amount
+        remaining_cash <- as.numeric(self$cash - amount)
         if (remaining_cash < 0) stop("You don't have enough cash to do that.")
         if (amount >= 0) self$cash <- remaining_cash
 
