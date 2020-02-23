@@ -15,10 +15,12 @@ This is a Portfolio class
 \itemize{
 \item \href{#method-buy}{\code{portfolio$buy()}}
 \item \href{#method-sell}{\code{portfolio$sell()}}
+\item \href{#method-sell_everything}{\code{portfolio$sell_everything()}}
 \item \href{#method-cash_in}{\code{portfolio$cash_in()}}
 \item \href{#method-cash_out}{\code{portfolio$cash_out()}}
 \item \href{#method-download_data}{\code{portfolio$download_data()}}
-\item \href{#method-portfolio_evolution}{\code{portfolio$portfolio_evolution()}}
+\item \href{#method-current_ownership}{\code{portfolio$current_ownership()}}
+\item \href{#method-simulate}{\code{portfolio$simulate()}}
 \item \href{#method-clone}{\code{portfolio$clone()}}
 }
 }
@@ -65,34 +67,86 @@ Sells a determined asset and gets cash back.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-sell_everything"></a>}}
+\subsection{Method \code{sell_everything()}}{
+Sells all owned assets.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{portfolio$sell_everything(date)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{date}}{Date or date-like string that tells when should this asset be sold.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cash_in"></a>}}
 \subsection{Method \code{cash_in()}}{
+Add cash into the user portfolio.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{portfolio$cash_in(amount, date, report = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{amount}}{How much cash should be moved.}
+
+\item{\code{date}}{Date or date-like string.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cash_out"></a>}}
 \subsection{Method \code{cash_out()}}{
+Withdraw cash from the user portfolio.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{portfolio$cash_out(amount, date, report = TRUE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{amount}}{How much cash should be moved.}
+
+\item{\code{date}}{Date or date-like string.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-download_data"></a>}}
 \subsection{Method \code{download_data()}}{
+Downloads and stores all avilable historic prices of a given asset.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{portfolio$download_data(asset)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{asset}}{Symbol specifying the asset.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-portfolio_evolution"></a>}}
-\subsection{Method \code{portfolio_evolution()}}{
+\if{html}{\out{<a id="method-current_ownership"></a>}}
+\subsection{Method \code{current_ownership()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{portfolio$portfolio_evolution(d_max)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{portfolio$current_ownership(date, orders = self$orders)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-simulate"></a>}}
+\subsection{Method \code{simulate()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{portfolio$simulate(d_max)}\if{html}{\out{</div>}}
 }
 
 }

@@ -28,7 +28,7 @@ get_dividends <-
     for(s in symbol){
       pb$tick()
       handle <- get_handle()
-      yahoo_url <- build_yahoo_url(s = s, from = date_to_unix(from), to = date_to_unix(to), period = '1d', type = "div", handle = handle)
+      yahoo_url <- build_yahoo_url(symbol = s, from = date_to_unix(from), to = date_to_unix(to), interval = '1d', event = "div", handle = handle)
       dividends <- NULL
       try(dividends <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols()), silent = TRUE)
       if(is.null(dividends)){

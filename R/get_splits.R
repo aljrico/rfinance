@@ -10,30 +10,37 @@
 #'
 #' @examples
 #'
-#' splits <- get_splits('MSFT')
+#' splits <- get_splits("MSFT")
 #' @rdname get_splits
 #' @export
-#' 
+#'
 get_splits <-
-  function(symbol, from = '1970-01-01', to = Sys.Date()){
-    
+  function(symbol, from = "1970-01-01", to = Sys.Date()) {
     handle <- get_handle()
-    yahoo_url <- build_yahoo_url(symbol = symbol, from = date_to_unix(from), to = date_to_unix(to), period = '1d', type = 'split', handle = handle)
-    
-    splits <- readr::read_csv(curl::curl(yahoo_url,handle = handle$session), col_types = readr::cols())
+    yahoo_url <- build_yahoo_url(
+      symbol = symbol,
+      from = date_to_unix(from),
+      to = date_to_unix(to),
+      interval = "1d",
+      event = "split",
+      handle = handle
+    )
+
+    splits <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
     closeAllConnections()
-    
-    if(nrow(splits)==0) {
+
+    if (nrow(splits) == 0) {
       splits <- NA
     } else {
-      
-      numeric_ratio <- function(x){
-        this_ratio <- strsplit(x, ':') %>% unlist() %>% as.numeric()
+      numeric_ratio <- function(x) {
+        this_ratio <- strsplit(x, ":") %>%
+          unlist() %>%
+          as.numeric()
         this_ratio[[1]] / this_ratio[[2]]
       }
-      splits$stock_splits <- sapply(splits[['Stock Splits']], numeric_ratio)
-      splits <- xts::xts(splits$stock_splits, as.Date(splits[['Date']], "%Y-%m-%d"))
-      colnames(splits) <- paste(symbol,'split',sep='_')
+      splits$stock_splits <- sapply(splits[["Stock Splits"]], numeric_ratio)
+      splits <- xts::xts(splits$stock_splits, as.Date(splits[["Date"]], "%Y-%m-%d"))
+      colnames(splits) <- paste(symbol, "split", sep = "_")
     }
     return(splits)
   }
