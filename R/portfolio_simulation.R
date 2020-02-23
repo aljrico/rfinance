@@ -9,6 +9,8 @@ portfolio <-
     public = list(
       cash = 0,
       orders = data.frame(asset = character(0), date = character(0), type = character(0)),
+      assets_evolution = NULL,
+      portfolio_evolution = NULL,
       
       #' @description Spend some cash to buy an asset.
       #' @param asset Symbol specifying the asset to be bought.
@@ -101,8 +103,8 @@ portfolio <-
       #' my_portfolio$cash_out(50, '2020-01-01')
       #' 
       cash_out = function(amount, date, report = TRUE) {
-        remaining_cash <- as.numeric(self$cash - amount)
-        if (remaining_cash < 0) stop("You don't have enough cash to do that.")
+        remaining_cash <- as.numeric(self$cash - as.numeric(amount))
+        if (remaining_cash < - 0) stop("You don't have enough cash to do that.")
         if (amount >= 0) self$cash <- remaining_cash
 
         # Register Operation
@@ -189,6 +191,7 @@ portfolio <-
           data.table::rbindlist() %>%
           tibble::as_tibble()
 
+        self$assets_evolution <- 
         ownership %>%
           dplyr::arrange(date) %>%
           dplyr::rename(name = asset) %>%
@@ -200,6 +203,14 @@ portfolio <-
           tidyr::pivot_wider(names_from = name, values_from = asset_value) %>%
           replace(., is.na(.), 0) %>% 
           dplyr::inner_join(cash_history)
+
+        self$portfolio_evolution <- 
+        self$assets_evolution %>% 
+        tidyr::pivot_longer(-date) %>% 
+        group_by(date) %>% 
+        summarise(value = sum(value, na.rm = TRUE)) %>% 
+        arrange(date)
+
       }
     ),
     private = list(
