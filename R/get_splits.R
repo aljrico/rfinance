@@ -26,7 +26,12 @@ get_splits <-
     if(nrow(splits)==0) {
       splits <- NA
     } else {
-      splits$stock_splits <- vapply(parse(text=splits[['Stock Splits']]), eval, numeric(1))
+      
+      numeric_ratio <- function(x){
+        this_ratio <- strsplit(x, ':') %>% unlist() %>% as.numeric()
+        this_ratio[[1]] / this_ratio[[2]]
+      }
+      splits$stock_splits <- sapply(splits[['Stock Splits']], numeric_ratio)
       splits <- xts::xts(splits$stock_splits, as.Date(splits[['Date']], "%Y-%m-%d"))
       colnames(splits) <- paste(symbol,'split',sep='_')
     }

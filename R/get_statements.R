@@ -61,7 +61,7 @@ clean_numbers <- function(x) {
 }
 
 build_url <- function(symbol, statement_type) {
-  glue::glue("https://financialmodelingprep.com/api/v3/financials/{statement_type}-statement/{symbol}?datatype=csv")
+  glue::glue("https://financialmodelingprep.com/api/v3/financials/{statement_type}-statement/{symbol}?period=quarter&datatype=csv")
 }
 
 fetch_financial_statement <- function(symbol, type){
