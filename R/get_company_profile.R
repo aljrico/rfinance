@@ -11,9 +11,8 @@ fetch_company_profile <- function(symbol) {
   content <- lapply(content, FUN = clean_null)
   company_profile <- as.data.frame(content)
   
-  company_profile %>% 
-    dplyr::mutate(symbol = symbol) %>% 
-    dplyr::select(symbol, companyName, sector, industry, price, beta, exchange, lastDiv, mktCap, ceo, description)
+  company_profile$symbol <- symbol
+  company_profile[c('symbol', 'companyName', 'sector', 'industry', 'price', 'beta', 'exchange', 'lastDiv', 'mktCap', 'ceo', 'description')]
 }
 
 

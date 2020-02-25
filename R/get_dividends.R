@@ -49,11 +49,10 @@ get_dividends <-
       # Adjust for splits
       if (split_adjust) dividends <- adjust_for_splits(dividends, s)
       
-      dividends$name <- s
+      dividends['name'] <- s
       
       df_list[[s]] <- 
-        dividends %>% 
-        dplyr::select(date, name, dividends) %>% 
+        dividends[c('date', 'name', 'dividends')] %>% 
         dplyr::arrange(date)
     }
 
