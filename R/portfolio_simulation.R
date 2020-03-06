@@ -10,7 +10,7 @@ portfolio <-
       cash = 0,
       orders = data.frame(asset = character(0), date = character(0), type = character(0)),
       assets_evolution = NULL,
-      simulation = NULL,
+      value_evolution = NULL,
 
       #' @description Spend some cash to buy an asset.
       #' @param asset Symbol specifying the asset to be bought.
@@ -104,7 +104,7 @@ portfolio <-
       #'
       cash_out = function(amount, date, report = TRUE) {
         remaining_cash <- as.numeric(self$cash - as.numeric(amount))
-        if (remaining_cash < -0) stop("You don't have enough cash to do that.")
+        if (remaining_cash < 0) stop("You don't have enough cash to do that.")
         if (amount >= 0) self$cash <- remaining_cash
 
         # Register Operation
@@ -219,14 +219,16 @@ portfolio <-
           replace(., is.na(.), 0) %>%
           dplyr::inner_join(cash_history)
 
-        self$simulation <-
+        self$value_evolution <-
           self$assets_evolution %>%
           tidyr::pivot_longer(-date) %>%
-          group_by(date) %>%
-          summarise(value = sum(value, na.rm = TRUE)) %>%
-          arrange(date)
+          dplyr::group_by(date) %>%
+          dplyr::summarise(value = sum(value, na.rm = TRUE)) %>%
+          dplyr::arrange(date)
         
-        return(self$simulation)
+        message("Simulation finished successfully. The following fields have been generated: 'value_evolution', 'assets_evolution' ")
+        
+        return(self$value_evolution)
       }
     ),
     private = list(
