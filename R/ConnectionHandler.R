@@ -47,9 +47,6 @@ ConnectionHandler = R6::R6Class(
         table_result <- data.table::data.table(docs$find(json_string))
         return(table_result)
       }
-      order = function(dt){
-        dt[order(-balance_sheet_date)]
-      }
       
       # Establish Connection
       private$open_connection()
@@ -59,8 +56,7 @@ ConnectionHandler = R6::R6Class(
       table_result <- 
         ticker %>% 
         download_raw_data() %>% 
-        janitor::clean_names() %>% 
-        order()
+        janitor::clean_names()
       
       # Close Connection
       private$close_connection()
