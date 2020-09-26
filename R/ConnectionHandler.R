@@ -48,6 +48,19 @@ ConnectionHandler = R6::R6Class(
         return(table_result)
       }
       
+      can_be_numeric <- function(x){
+        is.na(suppressWarnings(as.numeric(x)))
+      }
+      format_numerics <- function(dt){
+        data.table::setDT(dt)
+        
+        for(j in 1:ncol(dt)){
+          if(all(can_be_numeric(dt[[j]]))){
+            data.table::set(dt, j = j, value = as.numeric(dt[[j]]))
+          }
+        }
+      }
+      
       # Establish Connection
       private$open_connection()
       
@@ -56,6 +69,7 @@ ConnectionHandler = R6::R6Class(
       table_result <- 
         ticker %>% 
         download_raw_data() %>% 
+        format_numerics() %>% 
         janitor::clean_names()
       
       # Close Connection
