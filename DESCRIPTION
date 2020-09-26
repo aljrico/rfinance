@@ -27,7 +27,8 @@ Imports:
     progress,
     xml2,
     rvest,
-    data.table
+    data.table,
+    janitor
 RoxygenNote: 7.0.2
 Suggests: 
     knitr,
