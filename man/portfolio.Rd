@@ -19,7 +19,7 @@ This is a Portfolio class
 \item \href{#method-cash_in}{\code{portfolio$cash_in()}}
 \item \href{#method-cash_out}{\code{portfolio$cash_out()}}
 \item \href{#method-download_data}{\code{portfolio$download_data()}}
-\item \href{#method-current_ownership}{\code{portfolio$current_ownership()}}
+\item \href{#method-ownership_evolution}{\code{portfolio$ownership_evolution()}}
 \item \href{#method-simulate}{\code{portfolio$simulate()}}
 \item \href{#method-clone}{\code{portfolio$clone()}}
 }
@@ -135,20 +135,39 @@ Downloads and stores all avilable historic prices of a given asset.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-current_ownership"></a>}}
-\subsection{Method \code{current_ownership()}}{
+\if{html}{\out{<a id="method-ownership_evolution"></a>}}
+\subsection{Method \code{ownership_evolution()}}{
+Calculates the historical evolution of asset ownership
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{portfolio$current_ownership(date, orders = self$orders)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{portfolio$ownership_evolution(date, orders = self$orders)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{date}}{Symbol specifying the asset.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-simulate"></a>}}
 \subsection{Method \code{simulate()}}{
+Compute portfolio simulation
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{portfolio$simulate(d_max)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{portfolio$simulate(until = max(self$orders$date))}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{until}}{Date limit to which the simulation should be computed.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+data.frame
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
