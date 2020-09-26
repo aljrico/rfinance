@@ -12,8 +12,8 @@ ConnectionHandler = R6::R6Class(
       message(full_msg)
     },
     credentials = list(
-      username ='consumer-1',
-      password = 'HWjZKZcWWkYnU8E8WZaxnFgoAZU8cn'
+      username = NULL,
+      password = NULL
     ),
     database = 'secgov-dev',
     collection = 'visited-links',
@@ -31,8 +31,12 @@ ConnectionHandler = R6::R6Class(
     }
   ),
   public = list(
-    initialize = function(){
+    initialize = function(username, password){
       private$log("Checking credentials...")
+      
+      private$credentials$username = username
+      private$credentials$password = password
+      
       private$connection_url = sprintf(private$base_url, private$credentials$username, private$credentials$password, private$database)
       
     },
