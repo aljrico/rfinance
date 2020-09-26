@@ -59,6 +59,7 @@ ConnectionHandler = R6::R6Class(
             data.table::set(dt, j = j, value = as.numeric(dt[[j]]))
           }
         }
+        return(dt)
       }
       
       # Establish Connection
