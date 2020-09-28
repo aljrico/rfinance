@@ -71,7 +71,7 @@ ConnectionHandler <- R6::R6Class(
       } else {
         table_result <-
           raw_data %>%
-          format_numerics() %>%
+          # format_numerics() %>%
           janitor::clean_names()
       }
 
