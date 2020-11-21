@@ -10,9 +10,9 @@
 #' @rdname log_in
 #' @export
 #'
-log_in <- function(username = 'consumer-1', password = 'HWjZKZcWWkYnU8E8WZaxnFgoAZU8cn'){
-  rfinance_connection_handler <- ConnectionHandler$new(username, password)
-  assign("rfinance_connection_handler", rfinance_connection_handler, envir = globalenv())
+log_in <- function(username, password){
+  rfinanceConnection <- ConnectionHandler$new(username, password)
+  assign("rfinanceConnection", rfinanceConnection, envir = globalenv())
 }
 
 #' Log Out
@@ -26,7 +26,7 @@ log_in <- function(username = 'consumer-1', password = 'HWjZKZcWWkYnU8E8WZaxnFgo
 #' @export
 #'
 log_out <- function(){
-  if(exists("rfinance_connection_handler")){
-    rm(rfinance_connection_handler, envir = globalenv())
+  if(exists("rfinanceConnection")){
+    rm(rfinanceConnection, envir = globalenv())
   }
 }

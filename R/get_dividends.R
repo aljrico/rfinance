@@ -19,8 +19,7 @@
 #'
 #'
 #'
-get_dividends <-
-  function(symbol, from = "1950-01-01", to = Sys.Date(), split_adjust = FALSE) {
+get_dividends <- function(symbol, from = "1950-01-01", to = Sys.Date(), split_adjust = FALSE) {
     
     df_list <- list()
     pb <- progress::progress_bar$new(format = "Downloading Dividends [:bar] :percent eta: :eta", total = length(symbol), clear = TRUE)

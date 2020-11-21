@@ -4,7 +4,7 @@
 \alias{log_in}
 \title{Log In}
 \usage{
-log_in(username = "consumer-1", password = "HWjZKZcWWkYnU8E8WZaxnFgoAZU8cn")
+log_in(username, password)
 }
 \arguments{
 \item{username}{String containing the username.}

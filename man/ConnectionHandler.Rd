@@ -22,7 +22,7 @@ This is a ConnectionHandler class
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$new(username, password)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$new(username = NULL, password = NULL)}\if{html}{\out{</div>}}
 }
 
 }

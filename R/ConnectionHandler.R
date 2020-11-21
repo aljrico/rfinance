@@ -12,74 +12,118 @@ ConnectionHandler <- R6::R6Class(
       message(full_msg)
     },
     credentials = list(
-      username = "consumer-1",
-      password = "HWjZKZcWWkYnU8E8WZaxnFgoAZU8cn"
+      username = "rfinance",
+      password = "rfinance",
+      token = NULL
     ),
-    database = "secgov-dev",
-    collection = "visited-links",
-    base_url = "mongodb+srv://%s:%s@dev-cluster.vvwni.gcp.mongodb.net/%s?retryWrites=true&w=majority",
-    connection_url = NULL,
-    connection_object = NULL,
-    open_connection = function() {
-      private$connection_object <- mongolite::mongo(collection = "visited-links", url = private$connection_url)
-    },
-    close_connection = function() {
-      private$connection_object$disconnect()
-      private$connection_object <- NULL
+    content_type = "application/x-www-form-urlencoded",
+    base_url = "https://finten.weirwood.ai/api",
+    read_credentials = function(username, password){
+      
+      # Check if any credentials have been provided
+      if(is.null(username) | is.null(password)){
+        private$log("No credentials provided. The default user will be used")
+      }else{
+        private$credentials$username = username
+        private$credentials$password = password
+      }
+      
+      # Send credentials to the database
+      response <- httr::POST(
+        url = glue::glue(private$base_url, "/users/login"), 
+        body = glue::glue("username={private$credentials$username}&password={private$credentials$password}"), 
+        httr::content_type(private$content_type), 
+        encode = "json"
+      )
+      
+      # Parse response
+      response_content <- httr::content(response)
+      
+      # Check if the response contains any error
+      if(any(names(response_content) == "error")){
+        error_message <- glue::glue("{response_content$error}")
+        stop(error_message)
+      }else{
+        
+        # If the response is correct, we can 
+        # save up the token
+        private$credentials$token = httr::content(response)$token
+        self$token = private$credentials$token
+        self$premium = httr::content(response)$isPremium
+      }
+      
     }
   ),
   public = list(
-    initialize = function(username, password) {
+    initialize = function(username = NULL, password = NULL) {
       private$log("Checking credentials...")
-
-      private$credentials$username <- username
-      private$credentials$password <- password
-
-      private$connection_url <- sprintf(private$base_url, private$credentials$username, private$credentials$password, private$database)
-    },
+      private$read_credentials(username, password)
+      },
     get_statements = function(ticker) {
-      download_raw_data <- function(ticker) {
-        docs <- mongolite::mongo(collection = "filings", url = private$connection_url)
-        json_string <- paste0('{"TradingSymbol":"', ticker, '"}')
-        table_result <- data.table::data.table(docs$find(json_string))
-        return(table_result)
+      
+      # Define auxiliary functions
+      process_response <- function(response){
+        raw_content <- httr::content(response)
+        filings <- raw_content$filings
+        
+        filings_list <- lapply(filings, function(f){
+          file_list <- as.list(f)
+          file_table <- data.table::as.data.table(file_list)
+          return(file_table)
+        })
+        
+        statements_table <- data.table::rbindlist(filings_list)
       }
-
-      can_be_numeric <- function(x) {
-        is.na(suppressWarnings(as.numeric(x)))
-      }
-      format_numerics <- function(dt) {
-        data.table::setDT(dt)
-
-        for (j in 1:ncol(dt)) {
-          if (all(can_be_numeric(dt[[j]]))) {
-            data.table::set(dt, j = j, value = as.numeric(dt[[j]]))
-          }
+      manage_errors <- function(response){
+        if(response$status_code == 401){
+          stop("Invalid credentials.")
+        }else if(response$status_code == 403){
+          warning(glue::glue("The ticker {ticker} is not available."))
+          return(NULL)
         }
-        return(dt)
       }
-
-      # Establish Connection
-      private$open_connection()
-
-      # Get data
-      private$log(paste0("Downloading data for ", ticker))
-      raw_data <- ticker %>% download_raw_data()
-      if (nrow(raw_data) == 0) {
-        warning(paste0("We can't obtain data from ", ticker))
-        table_result <- NULL
-      } else {
-        table_result <-
-          raw_data %>%
-          # format_numerics() %>%
-          janitor::clean_names()
+      clean_numbers_format <- function(statements){
+        can_be_numeric <- function(x) {
+          is.na(suppressWarnings(as.numeric(x)))
+        }
+        format_numerics <- function(dt) {
+          for (j in 1:ncol(dt)) {
+            if (all(can_be_numeric(dt[[j]]))) {
+              data.table::set(dt, j = j, value = as.numeric(dt[[j]]))
+            }
+          }
+          return(dt)
+        }
+        
+        format_numerics(statements)
       }
-
-
-      # Close Connection
-      private$close_connection()
-
-      return(table_result)
-    }
+      
+      # Send log
+      private$log(glue::glue("Looking for {ticker} statements"))
+      
+      # Send HTTP request
+      statements_url <- glue::glue(private$base_url, "/company/filings?ticker={ticker}")
+      response <- httr::GET(
+        url = statements_url,
+        httr::add_headers(Authorization = glue::glue("Bearer {private$credentials$token}")),
+        encode = "json"
+      )
+      
+      # Manage possible errors
+      manage_errors(response)
+      
+      # Process HTTP response
+      statements <- process_response(response)
+      
+      # Standardise column names
+      statements <- janitor::clean_names(statements)
+      
+      # Add new column containing the selected ticker
+      statements$ticker <- ticker
+      
+      return(statements)
+    },
+    premium = NULL,
+    token = NULL
   )
 )
