@@ -33,5 +33,3 @@ get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
   output <- data.table::rbindlist(output) %>% tibble::as_tibble()
   return(output) 
 }
-
-get_prices(c('MSFT'))
