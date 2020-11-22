@@ -31,5 +31,5 @@ This function downloads all available dividend payments history of a given compa
 dividends <- get_dividends('MSFT')
 }
 \author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.github.io}{Personal Website}
+Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
 }

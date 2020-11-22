@@ -8,7 +8,7 @@
 #' @param split_adjust Boolean deciding if data should adjusted with splits
 #'
 #'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.github.io}{Personal Website}
+#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
 #'
 #'
 #' @examples

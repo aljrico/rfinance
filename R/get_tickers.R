@@ -5,7 +5,7 @@
 #' @param index Indicates what index should the tickets be retrieved from. Currently only 'sp100', 'sp400' and 'sp500' are working.
 #'
 #'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.github.io}{Personal Website}
+#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
 #'
 #'
 #' @examples

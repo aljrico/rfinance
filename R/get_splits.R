@@ -5,7 +5,7 @@
 #' @param from Minimum date to get data from
 #' @param to Maximum date to get data of
 #'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.github.io}{Personal Website}
+#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
 #'
 #'
 #' @examples

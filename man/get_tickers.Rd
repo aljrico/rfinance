@@ -20,5 +20,5 @@ This function parses the most recent list of tickers for a given index
 tickers_list <- get_tickers()
 }
 \author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.github.io}{Personal Website}
+Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
 }
