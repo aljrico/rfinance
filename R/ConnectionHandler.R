@@ -17,7 +17,7 @@ ConnectionHandler <- R6::R6Class(
       token = NULL
     ),
     content_type = "application/x-www-form-urlencoded",
-    base_url = "https://finten.weirwood.ai/api",
+    base_url = "https://finten.weirwood.ai",
     read_credentials = function(username, password){
       
       # Check if any credentials have been provided
