@@ -52,6 +52,14 @@ ConnectionHandler <- R6::R6Class(
         self$premium = httr::content(response)$isPremium
       }
       
+    },
+    manage_errors = function(response){
+      if(response$status_code == 401){
+        stop("Invalid credentials.")
+      }else if(response$status_code == 403){
+        warning(glue::glue("The ticker {ticker} is not available."))
+        return(NULL)
+      }
     }
   ),
   public = list(
@@ -73,14 +81,6 @@ ConnectionHandler <- R6::R6Class(
         })
         
         statements_table <- data.table::rbindlist(filings_list)
-      }
-      manage_errors <- function(response){
-        if(response$status_code == 401){
-          stop("Invalid credentials.")
-        }else if(response$status_code == 403){
-          warning(glue::glue("The ticker {ticker} is not available."))
-          return(NULL)
-        }
       }
       clean_numbers_format <- function(statements){
         can_be_numeric <- function(x) {
@@ -110,7 +110,7 @@ ConnectionHandler <- R6::R6Class(
       )
       
       # Manage possible errors
-      manage_errors(response)
+      private$manage_errors(response)
       
       # Process HTTP response
       statements <- process_response(response)
@@ -122,6 +122,33 @@ ConnectionHandler <- R6::R6Class(
       statements$ticker <- ticker
       
       return(statements)
+    },
+    get_tickers = function(){
+      
+      # Auxiliary Functions
+      process_response <- function(response){
+        raw_content <- httr::content(response)
+        unlist(raw_content$tickers)
+      }
+      
+      # Send log
+      private$log(glue::glue("Looking for tickers list"))
+      
+      # Send HTTP request
+      tickers_url <- glue::glue(private$base_url, "/company/tickers")
+      response <- httr::GET(
+        url = tickers_url,
+        httr::add_headers(Authorization = glue::glue("Bearer {private$credentials$token}")),
+        encode = "json"
+      )
+      
+      # Manage possible errors
+      private$manage_errors(response)
+      
+      # Process response
+      tickers <- process_response(response)
+      
+      return(tickers)
     },
     premium = NULL,
     token = NULL
