@@ -15,6 +15,7 @@ This is a ConnectionHandler class
 \itemize{
 \item \href{#method-new}{\code{ConnectionHandler$new()}}
 \item \href{#method-get_statements}{\code{ConnectionHandler$get_statements()}}
+\item \href{#method-get_tickers}{\code{ConnectionHandler$get_tickers()}}
 \item \href{#method-clone}{\code{ConnectionHandler$clone()}}
 }
 }
@@ -31,6 +32,14 @@ This is a ConnectionHandler class
 \subsection{Method \code{get_statements()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_statements(ticker)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_tickers"></a>}}
+\subsection{Method \code{get_tickers()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_tickers()}\if{html}{\out{</div>}}
 }
 
 }

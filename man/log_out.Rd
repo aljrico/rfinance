@@ -4,7 +4,10 @@
 \alias{log_out}
 \title{Log Out}
 \usage{
-log_out()
+log_out(environment = 1)
+}
+\arguments{
+\item{environment}{Leave blank. Which environment should the connection object be placed on?}
 }
 \value{
 Does not return anything

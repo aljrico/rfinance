@@ -4,20 +4,17 @@
 \alias{get_tickers}
 \title{Download list of tickers from a given public index}
 \usage{
-get_tickers(index = "sp500")
-}
-\arguments{
-\item{index}{Indicates what index should the tickets be retrieved from. Currently only 'sp100', 'sp400' and 'sp500' are working.}
+get_tickers()
 }
 \value{
-Returns a tibble.
+Returns a vector.
 }
 \description{
-This function parses the most recent list of tickers for a given index
+This function returns the list of available tickers in the data base
 }
 \examples{
 
-tickers_list <- get_tickers()
+tickers <- rfinance::get_tickers()
 }
 \author{
 Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}

@@ -4,12 +4,14 @@
 \alias{log_in}
 \title{Log In}
 \usage{
-log_in(username, password)
+log_in(username, password, environment = 1)
 }
 \arguments{
 \item{username}{String containing the username.}
 
 \item{password}{String containing the password.}
+
+\item{environment}{Leave blank. Which environment should the connection object be placed on?}
 }
 \value{
 Does not return anything
