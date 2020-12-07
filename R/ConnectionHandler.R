@@ -80,7 +80,7 @@ ConnectionHandler <- R6::R6Class(
           return(file_table)
         })
         
-        statements_table <- data.table::rbindlist(filings_list)
+        statements_table <- data.table::rbindlist(filings_list, fill = TRUE)
       }
       clean_numbers_format <- function(statements){
         can_be_numeric <- function(x) {
