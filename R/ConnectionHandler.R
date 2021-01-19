@@ -100,7 +100,7 @@ ConnectionHandler <- R6::R6Class(
       
       # Send log
       private$log(glue::glue("Looking for {ticker} statements"))
-      
+
       # Send HTTP request
       statements_url <- glue::glue(private$base_url, "/company/filings?ticker={ticker}")
       response <- httr::GET(
@@ -119,7 +119,7 @@ ConnectionHandler <- R6::R6Class(
       statements <- janitor::clean_names(statements)
       
       # Add new column containing the selected ticker
-      statements$ticker <- ticker
+      statements$ticker <- rep(ticker, nrow(statements))
       
       return(statements)
     },
