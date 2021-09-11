@@ -25,8 +25,10 @@ get_splits <-
       event = "split",
       handle = handle
     )
-
-    splits <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
+    
+    suppressMessages({
+      splits <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
+    })
     closeAllConnections()
 
     if (nrow(splits) == 0) {

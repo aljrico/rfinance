@@ -121,7 +121,7 @@ ConnectionHandler <- R6::R6Class(
       # Add new column containing the selected ticker
       statements$ticker <- rep(ticker, nrow(statements))
       
-      return(statements)
+      return(as.data.frame(statements))
     },
     get_tickers = function(){
       

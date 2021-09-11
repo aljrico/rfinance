@@ -25,7 +25,9 @@ get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
     prices <- data.table::data.table()
     
     tryCatch({
-      prices <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
+      suppressMessages({
+        prices <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
+      })
       prices$name <- symbol
     }, 
     error = function(e){
@@ -38,5 +40,5 @@ get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
   
   names(output) <- symbol
   output <- data.table::rbindlist(output, fill = TRUE)
-  return(output) 
+  return(as.data.frame(output))
 }
