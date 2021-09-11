@@ -21,6 +21,7 @@ This is a ConnectionHandler class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$new(username = NULL, password = NULL)}\if{html}{\out{</div>}}
@@ -29,6 +30,7 @@ This is a ConnectionHandler class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_statements"></a>}}
+\if{latex}{\out{\hypertarget{method-get_statements}{}}}
 \subsection{Method \code{get_statements()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_statements(ticker)}\if{html}{\out{</div>}}
@@ -37,6 +39,7 @@ This is a ConnectionHandler class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_tickers"></a>}}
+\if{latex}{\out{\hypertarget{method-get_tickers}{}}}
 \subsection{Method \code{get_tickers()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_tickers()}\if{html}{\out{</div>}}
@@ -45,6 +48,7 @@ This is a ConnectionHandler class
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

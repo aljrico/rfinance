@@ -23,13 +23,12 @@ Imports:
     xts,
     zoo,
     TTR,
-    pbapply,
-    progress,
     xml2,
     rvest,
     data.table,
-    janitor
-RoxygenNote: 7.0.2
+    janitor,
+    cli
+RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown,

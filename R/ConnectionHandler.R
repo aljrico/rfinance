@@ -9,7 +9,7 @@ ConnectionHandler <- R6::R6Class(
   private = list(
     log = function(msg) {
       full_msg <- paste0("  rfinance: ", msg)
-      message(full_msg)
+      cli::cli_alert(msg)
     },
     credentials = list(
       username = "rfinance",

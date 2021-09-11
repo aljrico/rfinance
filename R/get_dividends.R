@@ -22,10 +22,9 @@
 get_dividends <- function(symbol, from = "1950-01-01", to = Sys.Date(), split_adjust = FALSE) {
     
     df_list <- list()
-    pb <- progress::progress_bar$new(format = "Downloading Dividends [:bar] :percent eta: :eta", total = length(symbol), clear = TRUE)
-    
+    cli::cli_progress_bar("Downloading dividends", total = length(symbol))
     for(s in symbol){
-      pb$tick()
+      cli::cli_progress_update()
       handle <- get_handle()
       yahoo_url <- build_yahoo_url(symbol = s, from = date_to_unix(from), to = date_to_unix(to), interval = '1d', event = "div", handle = handle)
       dividends <- NULL
@@ -54,6 +53,6 @@ get_dividends <- function(symbol, from = "1950-01-01", to = Sys.Date(), split_ad
         dividends[c('date', 'name', 'dividends')] %>% 
         dplyr::arrange(date)
     }
-
+    cli::cli_progress_done()
     dplyr::bind_rows(df_list)
   }
