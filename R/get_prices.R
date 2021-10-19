@@ -26,7 +26,10 @@ get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
     
     tryCatch({
       suppressMessages({
-        prices <- readr::read_csv(curl::curl(yahoo_url, handle = handle$session), col_types = readr::cols())
+        curl_connection <- curl::curl(yahoo_url, handle = handle$session)
+        prices <- utils::read.csv(curl_connection) %>% 
+          janitor::clean_names() %>% 
+          tibble::as_tibble()
       })
       prices$name <- symbol
     }, 

@@ -2,6 +2,8 @@
 
 export("%>%")
 export(ConnectionHandler)
+export(calculate_alpha)
+export(calculate_sharpe_ratio)
 export(get_dividends)
 export(get_prices)
 export(get_sp500)

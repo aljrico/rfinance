@@ -27,6 +27,17 @@ This is a ConnectionHandler class
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$new(username = NULL, password = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{username}}{username}
+
+\item{\code{password}}{password
+
+Retrieves statements}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_statements"></a>}}
@@ -36,6 +47,14 @@ This is a ConnectionHandler class
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_statements(ticker)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{ticker}}{Company symbol
+Retrieves list of available tickers}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_tickers"></a>}}
@@ -45,6 +64,13 @@ This is a ConnectionHandler class
 \if{html}{\out{<div class="r">}}\preformatted{ConnectionHandler$get_tickers()}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{NULL}}{}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

@@ -1,3 +1,4 @@
+#' Gets a Handle Object
 #' @description This function establishes a connection with the API
 #' @keywords internal 
 get_handle <- function(){

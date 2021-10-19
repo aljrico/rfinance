@@ -7,9 +7,11 @@
 ConnectionHandler <- R6::R6Class(
   "ConnectionHandler",
   private = list(
+    premium = NULL,
+    token = NULL,
     log = function(msg) {
       full_msg <- paste0("  rfinance: ", msg)
-      cli::cli_alert(msg)
+      cli::cli_alert_info(msg)
     },
     credentials = list(
       username = "rfinance",
@@ -48,8 +50,8 @@ ConnectionHandler <- R6::R6Class(
         # If the response is correct, we can 
         # save up the token
         private$credentials$token = httr::content(response)$token
-        self$token = private$credentials$token
-        self$premium = httr::content(response)$isPremium
+        private$token = private$credentials$token
+        private$premium = httr::content(response)$isPremium
       }
       
     },
@@ -63,10 +65,18 @@ ConnectionHandler <- R6::R6Class(
     }
   ),
   public = list(
+    
+    #' @param username username
+    #' @param password password
+    #'
     initialize = function(username = NULL, password = NULL) {
       private$log("Checking credentials...")
       private$read_credentials(username, password)
       },
+    
+    #' Retrieves statements
+    #'
+    #' @param ticker Company symbol
     get_statements = function(ticker) {
       
       # Define auxiliary functions
@@ -121,8 +131,12 @@ ConnectionHandler <- R6::R6Class(
       # Add new column containing the selected ticker
       statements$ticker <- rep(ticker, nrow(statements))
       
-      return(as.data.frame(statements))
+      return(tibble::as_tibble(statements))
     },
+    
+    #' Retrieves list of available tickers
+    #' @param NULL
+    #' 
     get_tickers = function(){
       
       # Auxiliary Functions
@@ -149,8 +163,6 @@ ConnectionHandler <- R6::R6Class(
       tickers <- process_response(response)
       
       return(tickers)
-    },
-    premium = NULL,
-    token = NULL
+    }
   )
 )

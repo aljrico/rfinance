@@ -1,6 +1,7 @@
+#' Adjust For Splits
 #' @description This function adjusts prices or dividends by past company splits
-#' @internal adjust_for_splits
-#'
+#' @param df data.frame containing the prices/dividends to be adjusted
+#' @param symbol Ticker of the subject company
 adjust_for_splits <- function(df, symbol){
   variables <- colnames(df)
   dates <- df$date

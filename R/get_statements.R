@@ -6,15 +6,9 @@
 #'
 #' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
 #'
-#' @example download_statements('MSFT')
-#' @rdname download_statements
 #' @export
 #'
 get_statements <- function(ticker){
-  
-  if(!exists("rfinanceConnection")){
-    log_in(NULL, NULL)
-  }
-  
+  check_credentials()
   rfinanceConnection$get_statements(ticker)
 }
