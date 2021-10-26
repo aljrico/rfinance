@@ -12,8 +12,6 @@ You can install the released version of rfinance from [CRAN](https://CRAN.R-proj
 
 ``` r
 install.packages("rfinance")
-# or 
-devtools::install_github('aljrico/rfinance')
 ```
 
 ## Basic Usage
