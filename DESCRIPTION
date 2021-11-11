@@ -1,5 +1,5 @@
 Package: rfinance
-Title: Set of tools for financial analysis
+Title: Set of Tools for Financial Analysis
 Version: 0.1.0
 Authors@R: 
     person(given = "Alejandro",
@@ -28,10 +28,10 @@ Imports:
     janitor,
     cli,
     PerformanceAnalytics,
-    utils
+    utils,
+    zoo
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 2.1.0)
-VignetteBuilder: knitr
