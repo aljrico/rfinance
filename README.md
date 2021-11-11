@@ -2,6 +2,12 @@
 # rfinance <img src="man/figures/logo.png" align="right" width="120" />
 
 <!-- badges: start -->
+
+[![cran version](http://www.r-pkg.org/badges/version/rfinance)](https://cran.r-project.org/package=rfinance)
+[![rstudio mirror per-month downloads](http://cranlogs.r-pkg.org/badges/rfinance)](https://github.com/metacran/cranlogs.app)
+[![rstudio mirror total downloads](http://cranlogs.r-pkg.org/badges/grand-total/rfinance?color=yellowgreen)](https://github.com/metacran/cranlogs.app)
+
+
 <!-- badges: end -->
 
 The goal of rfinance is to provide a user-friendly suit of tools to perform financial analysis on R.
