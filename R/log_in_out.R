@@ -6,8 +6,6 @@
 #' @param password String containing the password.
 #' @param environment Leave blank. Which environment should the connection object be placed on?
 #'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
-#'
 #' @rdname log_in
 #' @export
 #'
@@ -21,8 +19,6 @@ log_in <- function(username, password, environment = 1){
 #' @description This function looks for the connection handler, removes it and closes all connections.
 #' @return Does not return anything
 #' @param environment Leave blank. Which environment should the connection object be placed on?
-#'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
 #'
 #' @rdname log_out
 #' @export

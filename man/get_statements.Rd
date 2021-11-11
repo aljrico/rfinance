@@ -15,6 +15,3 @@ Returns a data.table with the financial statements
 \description{
 This function checks uses an existing connection handler to retrieve financial statements from the database.
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

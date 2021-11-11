@@ -9,6 +9,3 @@ check_credentials()
 \description{
 This function will check whether a user has logged in. In case it hasn't, it will default to the 'rfinance' user
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

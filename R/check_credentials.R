@@ -3,8 +3,6 @@
 #' @description This function will check whether a user has logged in. In case it hasn't, it will default to the 'rfinance' user
 #' @return NULL
 #'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
-#'
 check_credentials <- function(){
   if(!exists("rfinanceConnection")){
     cli::cli_alert_warning("No credentials found. Defaulting to tester.")

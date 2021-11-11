@@ -23,6 +23,3 @@ Functions to call and retrieve financial data from remote databases, by using co
 
 splits <- get_splits("MSFT")
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

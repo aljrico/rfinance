@@ -19,6 +19,3 @@ Does not return anything
 \description{
 This function checks user credentials, opens a connection with the database and stores its handler in the global environment.
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

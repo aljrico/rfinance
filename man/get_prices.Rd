@@ -23,6 +23,3 @@ This function retrieves all available historic prices of a given company. This c
 
 prices <- get_prices('MSFT', from = '2010-04-05', to = '2011-03-02')
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

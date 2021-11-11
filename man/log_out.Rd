@@ -15,6 +15,3 @@ Does not return anything
 \description{
 This function looks for the connection handler, removes it and closes all connections.
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}

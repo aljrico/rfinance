@@ -7,10 +7,6 @@
 #' @param to Maximum date to get data of
 #' @param split_adjust Boolean deciding if data should adjusted with splits
 #'
-#'
-#' @author Alejandro Jiménez Rico \email{aljrico@@gmail.com}, \href{https://aljrico.com}{Personal Website}
-#'
-#'
 #' @examples
 #'
 #' dividends <- get_dividends('MSFT')

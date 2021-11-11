@@ -16,6 +16,3 @@ This function returns the list of available tickers in the data base
 
 tickers <- rfinance::get_tickers()
 }
-\author{
-Alejandro Jiménez Rico \email{aljrico@gmail.com}, \href{https://aljrico.com}{Personal Website}
-}
