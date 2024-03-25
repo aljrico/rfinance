@@ -15,29 +15,30 @@
 #'
 #'
 get_prices <- function(symbol, from = '1970-01-01', to = Sys.Date()){
-  handle <- get_handle()
-  output <- lapply(symbol, function(symbol){
-    yahoo_url <- build_yahoo_url(symbol = symbol, from = date_to_unix(from), to = date_to_unix(to), interval = '1d', event = 'history', handle = handle)
-    prices <- data.table::data.table()
-    
-    tryCatch({
-      suppressMessages({
-        curl_connection <- curl::curl(yahoo_url, handle = handle$session)
-        prices <- utils::read.csv(curl_connection) %>% 
-          janitor::clean_names() %>% 
-          tibble::as_tibble()
-      })
-      prices$name <- symbol
-    }, 
-    error = function(e){
-      warning(glue::glue("Prices for {symbol} were not found."))
-    })
-    
-    closeAllConnections()
-    return(prices)
-  })
+  .d <- `[`
+  remove_symbol_from_colname = function(data) {
+    for(col in names(data)){
+      new_col = col |> 
+        stringr::str_remove(symbol) |> 
+        stringr::str_remove("_")
+      
+      data.table::setnames(data, old = col, new = new_col)
+    }
+    return(data)
+  }
   
-  names(output) <- symbol
-  output <- data.table::rbindlist(output, fill = TRUE)
-  return(as.data.frame(output))
+  output <- lapply(symbol, function(symbol){
+    upper_symbol = toupper(symbol)
+    data_env = new.env()
+    quantmod::getSymbols(upper_symbol, env = data_env)
+    
+    data_env[[upper_symbol]] |> 
+      data.table::as.data.table() |> 
+      janitor::clean_names() |> 
+      remove_symbol_from_colname() |> 
+      .d(, ticker := upper_symbol)
+  }) |> 
+    data.table::rbindlist(fill = TRUE)
+  
+  return(output)
 }
